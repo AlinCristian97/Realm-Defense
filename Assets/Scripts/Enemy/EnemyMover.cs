@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Enemy
 {
+    [RequireComponent(typeof(Enemy))]
     public class EnemyMover : MonoBehaviour
     {
         private List<Waypoint> _path = new List<Waypoint>();
@@ -27,17 +28,28 @@ namespace Enemy
         {
             _path.Clear();
         
-            GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Path");
+            var parent = GameObject.FindGameObjectWithTag("Path");
 
-            foreach (GameObject waypoint in waypoints)
+            foreach (Transform child in parent.transform)
             {
-                _path.Add(waypoint.GetComponent<Waypoint>());
+                var waypoint = child.GetComponent<Waypoint>();
+
+                if (waypoint != null)
+                {
+                    _path.Add(waypoint);
+                }
             }
         }
 
         private void ReturnToStart()
         {
             transform.position = _path[0].transform.position;
+        }
+
+        private void FinishPath()
+        {
+            _enemy.StealGold();
+            gameObject.SetActive(false);
         }
 
         private IEnumerator FollowPath() 
@@ -58,9 +70,8 @@ namespace Enemy
                     yield return new WaitForEndOfFrame();
                 }
             }
-        
-            _enemy.StealGold();
-            gameObject.SetActive(false);
+
+            FinishPath();
         }
     }
 }

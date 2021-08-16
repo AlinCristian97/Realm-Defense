@@ -15,6 +15,30 @@ PrefabInstance:
       propertyPath: _isPlaceable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6896864206882039500, guid: ce047ef377347814588b996fffbcb130, type: 3}
+      propertyPath: _blockedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896864206882039500, guid: ce047ef377347814588b996fffbcb130, type: 3}
+      propertyPath: _blockedColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896864206882039500, guid: ce047ef377347814588b996fffbcb130, type: 3}
+      propertyPath: _blockedColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8094368362030520478, guid: ce047ef377347814588b996fffbcb130, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8094368362030520478, guid: ce047ef377347814588b996fffbcb130, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8094368362030520478, guid: ce047ef377347814588b996fffbcb130, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190335
+      objectReference: {fileID: 0}
     - target: {fileID: 8094368363171379019, guid: ce047ef377347814588b996fffbcb130, type: 3}
       propertyPath: m_Name
       value: Tile_RoadStraight

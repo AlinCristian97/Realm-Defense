@@ -7,10 +7,13 @@ using UnityEngine;
 [ExecuteAlways] // Executes both in Edit & Play Mode
 public class CoordinateLabeler : MonoBehaviour
 {
+    Color _defaultColor = Color.white;
+    Color _blockedColor = Color.black;
+
     [SerializeField] private TextMeshPro _label;
     private Vector2Int _coordinates;
+    private Waypoint _waypoint;
 
-    
     // TODO: Why does it throw NullReferenceException?
     // private void Awake()
     // {
@@ -19,7 +22,10 @@ public class CoordinateLabeler : MonoBehaviour
     
     private void Awake()
     {
-        DisplayCoordinates();   
+        _waypoint = GetComponentInParent<Waypoint>();
+        DisplayCoordinates();
+
+        _label.enabled = false;
     }
 
     void Update()
@@ -28,6 +34,29 @@ public class CoordinateLabeler : MonoBehaviour
         {
             DisplayCoordinates();
             UpdateObjectName();
+        }
+
+        ColorCoordinates();
+        ToggleLabels();
+    }
+
+    private void ToggleLabels()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            _label.enabled = !_label.IsActive();
+        }
+    }
+
+    private void ColorCoordinates()
+    {
+        if (_waypoint.IsPlaceable)
+        {
+            _label.color = _defaultColor;
+        }
+        else
+        {
+            _label.color = _blockedColor;
         }
     }
 

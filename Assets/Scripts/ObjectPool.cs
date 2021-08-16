@@ -42,7 +42,7 @@ public class ObjectPool : MonoBehaviour
     }
 
     private void EnableObjectInPool()
-    {
+    { 
         foreach (GameObject t in _pool)
         {
             if (t.activeInHierarchy) continue;

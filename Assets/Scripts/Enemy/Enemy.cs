@@ -1,29 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace Enemy
 {
-    [SerializeField] private int _goldReward = 25;
-    [SerializeField] private int _goldPenalty = 25;
-
-    private Bank _bank;
-
-    private void Start()
+    public class Enemy : MonoBehaviour
     {
-        _bank = FindObjectOfType<Bank>();
-    }
+        [SerializeField] private int _goldReward = 25;
+        [SerializeField] private int _goldPenalty = 25;
 
-    public void RewardGold()
-    {
-        if (_bank == null) return;
-        _bank.Deposit(_goldReward);
-    }
+        private Bank _bank;
+
+        private void Start()
+        {
+            _bank = FindObjectOfType<Bank>();
+        }
+
+        public void RewardGold()
+        {
+            if (_bank == null) return;
+            _bank.Deposit(_goldReward);
+        }
     
-    public void StealGold()
-    {
-        if (_bank == null) return;
-        _bank.Withdraw(_goldPenalty);
+        public void StealGold()
+        {
+            if (_bank == null) return;
+            _bank.Withdraw(_goldPenalty);
+        }
     }
 }

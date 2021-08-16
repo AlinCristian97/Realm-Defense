@@ -1,38 +1,38 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+namespace Enemy
 {
-    [SerializeField] private int _maxHitPoints = 5;
-    private int _currentHitPoints = 0;
-
-    private Enemy _enemy;
-
-    private void OnEnable()
+    public class EnemyHealth : MonoBehaviour
     {
-        _currentHitPoints = _maxHitPoints;
-    }
+        [SerializeField] private int _maxHitPoints = 5;
+        private int _currentHitPoints = 0;
 
-    private void Start()
-    {
-        _enemy = GetComponent<Enemy>();
-    }
+        private global::Enemy.Enemy _enemy;
 
-    private void OnParticleCollision(GameObject other)
-    {
-        ProcessHit();
-    }
-
-    private void ProcessHit()
-    {
-        _currentHitPoints--;
-
-        if (_currentHitPoints <= 0)
+        private void OnEnable()
         {
-            gameObject.SetActive(false);
-            _enemy.RewardGold();
+            _currentHitPoints = _maxHitPoints;
+        }
+
+        private void Start()
+        {
+            _enemy = GetComponent<global::Enemy.Enemy>();
+        }
+
+        private void OnParticleCollision(GameObject other)
+        {
+            ProcessHit();
+        }
+
+        private void ProcessHit()
+        {
+            _currentHitPoints--;
+
+            if (_currentHitPoints <= 0)
+            {
+                gameObject.SetActive(false);
+                _enemy.RewardGold();
+            }
         }
     }
 }

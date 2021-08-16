@@ -9,7 +9,7 @@ namespace Enemy
         private List<Waypoint> _path = new List<Waypoint>();
         [SerializeField] [Range(0f, 5f)] private float _speed = 1f;
 
-        private global::Enemy.Enemy _enemy;
+        private Enemy _enemy;
     
         private void OnEnable()
         {
@@ -20,7 +20,7 @@ namespace Enemy
 
         private void Start()
         {
-            _enemy = GetComponent<global::Enemy.Enemy>();
+            _enemy = GetComponent<Enemy>();
         }
 
         private void FindPath()

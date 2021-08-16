@@ -133,4 +133,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  _waitTime: 1
+  _speed: 1

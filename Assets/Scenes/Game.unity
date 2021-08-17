@@ -16839,7 +16839,7 @@ PrefabInstance:
       objectReference: {fileID: 107671956}
     - target: {fileID: 4350025812082376182, guid: 4f863ca5b90837f48b0efbdcc1225f9a, type: 3}
       propertyPath: _startingBalance
-      value: 3500
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 4350025812082376184, guid: 4f863ca5b90837f48b0efbdcc1225f9a, type: 3}
       propertyPath: m_RootOrder

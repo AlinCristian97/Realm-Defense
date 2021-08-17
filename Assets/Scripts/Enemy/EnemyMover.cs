@@ -18,7 +18,7 @@ namespace Enemy
     
         private void OnEnable()
         {
-            FindPath();
+            RecalculatePath();
             ReturnToStart();
             StartCoroutine(FollowPath());
         }
@@ -35,7 +35,7 @@ namespace Enemy
             
         }
 
-        private void FindPath()
+        private void RecalculatePath()
         {
             _path.Clear();
             _path = _pathfinder.GetNewPath();
@@ -53,14 +53,14 @@ namespace Enemy
             gameObject.SetActive(false);
         }
 
-        private IEnumerator FollowPath() 
+        private IEnumerator FollowPath()
         {
-            foreach (Node node in _path)
+            for (int i = 0; i < _path.Count; i++)
             {
                 Vector3 startPosition = transform.position;
-                Vector3 endPosition = _gridManager.GetPositionFromCoordinates(node.Coordinates);
+                Vector3 endPosition = _gridManager.GetPositionFromCoordinates(_path[i].Coordinates);
                 float travelPercent = 0f;
-            
+
                 transform.LookAt(endPosition);
 
                 while (travelPercent < 1f)

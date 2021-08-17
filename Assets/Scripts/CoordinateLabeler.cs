@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using TMPro;
 using UnityEngine;
 
@@ -10,10 +11,13 @@ public class CoordinateLabeler : MonoBehaviour
 {
     Color _defaultColor = Color.white;
     Color _blockedColor = Color.black;
+    Color _exploredColor = Color.yellow;
+    Color _pathColor = new Color(1f, 0.5f, 0f);
 
     [SerializeField] private TextMeshPro _label;
     private Vector2Int _coordinates;
-    private Waypoint _waypoint;
+
+    private GridManager _gridManager;
 
     // TODO: Why does it throw NullReferenceException?
     // private void Awake()
@@ -23,7 +27,7 @@ public class CoordinateLabeler : MonoBehaviour
     
     private void Awake()
     {
-        _waypoint = GetComponentInParent<Waypoint>();
+        _gridManager = FindObjectOfType<GridManager>();
         DisplayCoordinates();
 
         _label.enabled = false;
@@ -52,13 +56,27 @@ public class CoordinateLabeler : MonoBehaviour
 
     private void SetLabelColor()
     {
-        if (_waypoint.IsPlaceable)
+        if (_gridManager == null) { return; }
+
+        Node node = _gridManager.GetNode(_coordinates);
+
+        if (node == null) { return; }
+        
+        if (!node.IsWalkable)
         {
-            _label.color = _defaultColor;
+            _label.color = _blockedColor;
+        }
+        else if (node.IsPath)
+        {
+            _label.color = _pathColor;
+        }
+        else if (node.IsExplored)
+        {
+            _label.color = _exploredColor;
         }
         else
         {
-            _label.color = _blockedColor;
+            _label.color = _defaultColor;
         }
     }
 

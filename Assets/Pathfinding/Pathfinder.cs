@@ -6,7 +6,15 @@ namespace Pathfinding
 {
     public class Pathfinder : MonoBehaviour
     {
-        [SerializeField] private Node _currentSearchNode;
+        [SerializeField] private Vector2Int _startCoordinates;
+        [SerializeField] private Vector2Int _endCoordinates;
+        
+        private Node _startNode;
+        private Node _endNode;
+        private Node _currentSearchNode;
+
+        private Queue<Node> _frontier = new Queue<Node>();
+        private Dictionary<Vector2Int, Node> _reached = new Dictionary<Vector2Int, Node>();
 
         private Vector2Int[] _directions =
         {
@@ -15,9 +23,8 @@ namespace Pathfinding
             Vector2Int.up,
             Vector2Int.down
         };
-
         private GridManager _gridManager;
-        private Dictionary<Vector2Int, Node> _grid;
+        private Dictionary<Vector2Int, Node> _grid = new Dictionary<Vector2Int, Node>();
 
         private void Awake()
         {
@@ -27,11 +34,14 @@ namespace Pathfinding
             {
                 _grid = _gridManager.Grid;
             }
+
+            _startNode = new Node(_startCoordinates, true);
+            _endNode = new Node(_endCoordinates, true);
         }
 
         private void Start()
         {
-            ExploreNeighbours();
+            BreadthFirstSearch();
         }
 
         private void ExploreNeighbours()
@@ -51,10 +61,35 @@ namespace Pathfinding
                 if (_grid.ContainsKey(neighbourCoordinates))
                 {
                     neighbours.Add(_grid[neighbourCoordinates]);
-                    
-                    //TODO: Remove after testing
-                    _grid[neighbourCoordinates].IsExplored = true;
-                    _grid[_currentSearchNode.Coordinates].IsPath = true;
+                }
+            }
+
+            foreach (Node neighbour in neighbours)
+            {
+                if (!_reached.ContainsKey(neighbour.Coordinates) && neighbour.IsWalkable)
+                {
+                    _reached.Add(neighbour.Coordinates, neighbour);
+                    _frontier.Enqueue(neighbour);
+                }
+            }
+        }
+
+        private void BreadthFirstSearch()
+        {
+            bool isRunning = true;
+            
+            _frontier.Enqueue(_startNode);
+            _reached.Add(_startCoordinates, _startNode);
+
+            while (_frontier.Count > 0 && isRunning)
+            {
+                _currentSearchNode = _frontier.Dequeue();
+                _currentSearchNode.IsExplored = true;
+                ExploreNeighbours();
+
+                if (_currentSearchNode.Coordinates == _endCoordinates)
+                {
+                    isRunning = false;
                 }
             }
         }

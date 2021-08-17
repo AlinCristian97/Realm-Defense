@@ -63,7 +63,7 @@ namespace Pathfinding
             var position = new Vector3
             {
                 x = coordinates.x * _unityGridSize,
-                y = coordinates.y * _unityGridSize
+                z = coordinates.y * _unityGridSize
             };
 
             return position;

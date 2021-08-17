@@ -18,9 +18,8 @@ namespace Enemy
     
         private void OnEnable()
         {
-            RecalculatePath();
             ReturnToStart();
-            StartCoroutine(FollowPath());
+            RecalculatePath(true);
         }
 
         private void Awake()
@@ -35,11 +34,25 @@ namespace Enemy
             
         }
 
-        private void RecalculatePath()
+        private void RecalculatePath(bool resetPath)
         {
-            _path.Clear();
-            _path = _pathfinder.GetNewPath();
+            Vector2Int coordinates;
 
+            if (resetPath)
+            {
+                coordinates = _pathfinder.StartCoordinates;
+            }
+            else
+            {
+                coordinates = _gridManager.GetCoordinatesFromPosition(transform.position);
+            }
+            
+            StopAllCoroutines();
+            
+            _path.Clear();
+            _path = _pathfinder.GetNewPath(coordinates);
+            
+            StartCoroutine(FollowPath());
         }
 
         private void ReturnToStart()
@@ -55,7 +68,7 @@ namespace Enemy
 
         private IEnumerator FollowPath()
         {
-            for (int i = 0; i < _path.Count; i++)
+            for (int i = 1; i < _path.Count; i++)
             {
                 Vector3 startPosition = transform.position;
                 Vector3 endPosition = _gridManager.GetPositionFromCoordinates(_path[i].Coordinates);

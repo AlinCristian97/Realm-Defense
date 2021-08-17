@@ -9,6 +9,7 @@ namespace Pathfinding
         [SerializeField] private Vector2Int _gridSize;
         
         private Dictionary<Vector2Int, Node> _grid = new Dictionary<Vector2Int, Node>();
+        public Dictionary<Vector2Int, Node> Grid => _grid;
 
         private void Awake()
         {
@@ -33,7 +34,6 @@ namespace Pathfinding
                 {
                     var coordinates = new Vector2Int(x, y);
                     _grid.Add(coordinates, new Node(coordinates, true));
-                    Debug.Log(_grid[coordinates].Coordinates + " = " + _grid[coordinates].IsWalkable);
                 }
             }
         } 

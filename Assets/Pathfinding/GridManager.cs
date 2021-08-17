@@ -37,6 +37,16 @@ namespace Pathfinding
             }
         }
 
+        public void ResetNodes()
+        {
+            foreach (KeyValuePair<Vector2Int,Node> entry in _grid)
+            {
+                entry.Value.ConnectedTo = null;
+                entry.Value.IsExplored = false;
+                entry.Value.IsPath = false;
+            }
+        }
+
         public Vector2Int GetCoordinatesFromPosition(Vector3 position)
         {
             var coordinates = new Vector2Int

@@ -40,9 +40,15 @@ namespace Pathfinding
         {
             _startNode = _gridManager.Grid[_startCoordinates];
             _endNode = _gridManager.Grid[_endCoordinates];
-            
+
+            GetNewPath();
+        }
+
+        public List<Node> GetNewPath()
+        {
+            _gridManager.ResetNodes();
             BreadthFirstSearch();
-            BuildPath();
+            return BuildPath();
         }
 
         private void ExploreNeighbours()
@@ -79,6 +85,9 @@ namespace Pathfinding
 
         private void BreadthFirstSearch()
         {
+            _frontier.Clear();
+            _reached.Clear();
+            
             bool isRunning = true;
             
             _frontier.Enqueue(_startNode);
@@ -119,6 +128,26 @@ namespace Pathfinding
             path.Reverse();
 
             return path;
+        }
+
+        public bool WillBlockPath(Vector2Int coordinates)
+        {
+            if (_grid.ContainsKey(coordinates))
+            {
+                bool previousState = _grid[coordinates].IsWalkable;
+                
+                _grid[coordinates].IsWalkable = false;
+                List<Node> newPath = GetNewPath();
+                _grid[coordinates].IsWalkable = previousState;
+
+                if (newPath.Count <= 1)
+                {
+                    GetNewPath();
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

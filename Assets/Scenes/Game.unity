@@ -13115,7 +13115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71b974c52f57a44d8d8f3ae5d7254f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridSize: {x: 7, y: 7}
+  _gridSize: {x: 10, y: 10}
+  _unityGridSize: 10
 --- !u!4 &1586416638
 Transform:
   m_ObjectHideFlags: 0
@@ -16929,8 +16930,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2e73da38670144398d51dcd578d073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startCoordinates: {x: 4, y: 3}
-  _endCoordinates: {x: 1, y: 1}
+  _startCoordinates: {x: 4, y: 2}
+  _endCoordinates: {x: 8, y: 5}
 --- !u!1001 &2131540284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17125,6 +17126,14 @@ PrefabInstance:
     - target: {fileID: 3589405066588354330, guid: 2b4d8fef912c7ee4ca4b1ec4b80d7648, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3589405066588354331, guid: 2b4d8fef912c7ee4ca4b1ec4b80d7648, type: 3}
+      propertyPath: _poolSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3589405066588354331, guid: 2b4d8fef912c7ee4ca4b1ec4b80d7648, type: 3}
+      propertyPath: _spawnCooldown
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b4d8fef912c7ee4ca4b1ec4b80d7648, type: 3}

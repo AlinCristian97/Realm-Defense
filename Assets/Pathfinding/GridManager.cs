@@ -7,7 +7,10 @@ namespace Pathfinding
     public class GridManager : MonoBehaviour
     {
         [SerializeField] private Vector2Int _gridSize;
-        
+        [Tooltip("World Grid Size - Should match the UnityEditor snap settings")]
+        [SerializeField] private int _unityGridSize = 10;
+        public int UnityGridSize => _unityGridSize;
+
         private Dictionary<Vector2Int, Node> _grid = new Dictionary<Vector2Int, Node>();
         public Dictionary<Vector2Int, Node> Grid => _grid;
 
@@ -24,6 +27,36 @@ namespace Pathfinding
             }
 
             return null;
+        }
+
+        public void BlockNode(Vector2Int coordinates)
+        {
+            if (_grid.ContainsKey(coordinates))
+            {
+                _grid[coordinates].IsWalkable = false;
+            }
+        }
+
+        public Vector2Int GetCoordinatesFromPosition(Vector3 position)
+        {
+            var coordinates = new Vector2Int
+            {
+                x = Mathf.RoundToInt(position.x / _unityGridSize),
+                y = Mathf.RoundToInt(position.z / _unityGridSize)
+            };
+
+            return coordinates;
+        }
+
+        public Vector3 GetPositionFromCoordinates(Vector2Int coordinates)
+        {
+            var position = new Vector3
+            {
+                x = coordinates.x * _unityGridSize,
+                y = coordinates.y * _unityGridSize
+            };
+
+            return position;
         }
 
         private void CreateGrid()

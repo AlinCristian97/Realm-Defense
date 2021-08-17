@@ -7,7 +7,7 @@ namespace Enemy
     [RequireComponent(typeof(Enemy))]
     public class EnemyMover : MonoBehaviour
     {
-        private List<Waypoint> _path = new List<Waypoint>();
+        private List<Tile> _path = new List<Tile>();
         [SerializeField] [Range(0f, 5f)] private float _speed = 1f;
 
         private Enemy _enemy;
@@ -32,7 +32,7 @@ namespace Enemy
 
             foreach (Transform child in parent.transform)
             {
-                var waypoint = child.GetComponent<Waypoint>();
+                var waypoint = child.GetComponent<Tile>();
 
                 if (waypoint != null)
                 {
@@ -54,7 +54,7 @@ namespace Enemy
 
         private IEnumerator FollowPath() 
         {
-            foreach (Waypoint waypoint in _path)
+            foreach (Tile waypoint in _path)
             {
                 Vector3 startPosition = transform.position;
                 Vector3 endPosition = waypoint.transform.position;

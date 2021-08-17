@@ -1,20 +1,31 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pathfinding
 {
     public class GridManager : MonoBehaviour
     {
-        [SerializeField] private Node _node;
-
-        private void Start()
-        {
-            Debug.Log(_node.Coordinates);
-            Debug.Log(_node.IsWalkable);
-        }
-
-        private void Update()
-        {
+        [SerializeField] private Vector2Int _gridSize;
         
+        private Dictionary<Vector2Int, Node> _grid = new Dictionary<Vector2Int, Node>();
+
+        private void Awake()
+        {
+            CreateGrid();
         }
+
+        private void CreateGrid()
+        {
+            for (int x = 0; x < _gridSize.x; x++)
+            {
+                for (int y = 0; y < _gridSize.y; y++)
+                {
+                    var coordinates = new Vector2Int(x, y);
+                    _grid.Add(coordinates, new Node(coordinates, true));
+                    Debug.Log(_grid[coordinates].Coordinates + " = " + _grid[coordinates].IsWalkable);
+                }
+            }
+        } 
     }
 }

@@ -34,14 +34,15 @@ namespace Pathfinding
             {
                 _grid = _gridManager.Grid;
             }
-
-            _startNode = new Node(_startCoordinates, true);
-            _endNode = new Node(_endCoordinates, true);
         }
 
         private void Start()
         {
+            _startNode = _gridManager.Grid[_startCoordinates];
+            _endNode = _gridManager.Grid[_endCoordinates];
+            
             BreadthFirstSearch();
+            BuildPath();
         }
 
         private void ExploreNeighbours()
@@ -68,6 +69,8 @@ namespace Pathfinding
             {
                 if (!_reached.ContainsKey(neighbour.Coordinates) && neighbour.IsWalkable)
                 {
+                    neighbour.ConnectedTo = _currentSearchNode;
+                    
                     _reached.Add(neighbour.Coordinates, neighbour);
                     _frontier.Enqueue(neighbour);
                 }
@@ -92,6 +95,30 @@ namespace Pathfinding
                     isRunning = false;
                 }
             }
+        }
+
+        private List<Node> BuildPath()
+        {
+            List<Node> path = new List<Node>();
+            Node currentNode = _endNode;
+            
+            path.Add(currentNode);
+            currentNode.IsPath = true;
+            
+            //while currentNode.ConnectedTo != null
+                // set currentNode to currentNode.connectedTo
+                // add currentNode to path
+
+            while (currentNode.ConnectedTo != null)
+            {
+                currentNode = currentNode.ConnectedTo;
+                path.Add(currentNode);
+                currentNode.IsPath = true;
+            }
+            
+            path.Reverse();
+
+            return path;
         }
     }
 }

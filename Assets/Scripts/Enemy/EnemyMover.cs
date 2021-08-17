@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 namespace Enemy
@@ -7,10 +9,12 @@ namespace Enemy
     [RequireComponent(typeof(Enemy))]
     public class EnemyMover : MonoBehaviour
     {
-        private List<Tile> _path = new List<Tile>();
         [SerializeField] [Range(0f, 5f)] private float _speed = 1f;
 
+        private List<Node> _path = new List<Node>();
         private Enemy _enemy;
+        private GridManager _gridManager;
+        private Pathfinder _pathfinder;
     
         private void OnEnable()
         {
@@ -19,31 +23,28 @@ namespace Enemy
             StartCoroutine(FollowPath());
         }
 
+        private void Awake()
+        {           
+            _enemy = GetComponent<Enemy>();
+            _gridManager = FindObjectOfType<GridManager>();
+            _pathfinder = FindObjectOfType<Pathfinder>();
+        }
+
         private void Start()
         {
-            _enemy = GetComponent<Enemy>();
+            
         }
 
         private void FindPath()
         {
             _path.Clear();
-        
-            var parent = GameObject.FindGameObjectWithTag("Path");
+            _path = _pathfinder.GetNewPath();
 
-            foreach (Transform child in parent.transform)
-            {
-                var waypoint = child.GetComponent<Tile>();
-
-                if (waypoint != null)
-                {
-                    _path.Add(waypoint);
-                }
-            }
         }
 
         private void ReturnToStart()
         {
-            transform.position = _path[0].transform.position;
+            transform.position = _gridManager.GetPositionFromCoordinates(_pathfinder.StartCoordinates);
         }
 
         private void FinishPath()
@@ -54,10 +55,10 @@ namespace Enemy
 
         private IEnumerator FollowPath() 
         {
-            foreach (Tile waypoint in _path)
+            foreach (Node node in _path)
             {
                 Vector3 startPosition = transform.position;
-                Vector3 endPosition = waypoint.transform.position;
+                Vector3 endPosition = _gridManager.GetPositionFromCoordinates(node.Coordinates);
                 float travelPercent = 0f;
             
                 transform.LookAt(endPosition);

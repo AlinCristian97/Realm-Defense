@@ -8,6 +8,9 @@ namespace Pathfinding
     {
         [SerializeField] private Vector2Int _startCoordinates;
         [SerializeField] private Vector2Int _endCoordinates;
+        public Vector2Int StartCoordinates => _startCoordinates;
+        public Vector2Int EndCoordinates => _endCoordinates;
+
         
         private Node _startNode;
         private Node _endNode;
@@ -26,6 +29,7 @@ namespace Pathfinding
         private GridManager _gridManager;
         private Dictionary<Vector2Int, Node> _grid = new Dictionary<Vector2Int, Node>();
 
+
         private void Awake()
         {
             _gridManager = FindObjectOfType<GridManager>();
@@ -33,14 +37,14 @@ namespace Pathfinding
             if (_gridManager != null)
             {
                 _grid = _gridManager.Grid;
+                
+                _startNode = _grid[_startCoordinates];
+                _endNode = _grid[_endCoordinates];
             }
         }
 
         private void Start()
         {
-            _startNode = _gridManager.Grid[_startCoordinates];
-            _endNode = _gridManager.Grid[_endCoordinates];
-
             GetNewPath();
         }
 
@@ -85,6 +89,9 @@ namespace Pathfinding
 
         private void BreadthFirstSearch()
         {
+            _startNode.IsWalkable = true;
+            _endNode.IsWalkable = true;
+            
             _frontier.Clear();
             _reached.Clear();
             

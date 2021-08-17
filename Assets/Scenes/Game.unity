@@ -16549,8 +16549,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2e73da38670144398d51dcd578d073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startCoordinates: {x: 4, y: 2}
-  _endCoordinates: {x: 8, y: 5}
+  _startCoordinates: {x: 0, y: 0}
+  _endCoordinates: {x: 9, y: 6}
 --- !u!1001 &2131365751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16818,7 +16818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3589405066588354331, guid: 2b4d8fef912c7ee4ca4b1ec4b80d7648, type: 3}
       propertyPath: _poolSize
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3589405066588354331, guid: 2b4d8fef912c7ee4ca4b1ec4b80d7648, type: 3}
       propertyPath: _spawnCooldown
